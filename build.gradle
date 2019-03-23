@@ -1,0 +1,95 @@
+group 'com.example.demo'
+version '1.0-${policy}'
+
+apply plugin: 'java'
+apply plugin: 'idea'
+
+buildscript {
+
+    ext {
+        springBootVersion = "1.5.9.RELEASE"
+    }
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+idea {
+    module {
+        excludeDirs = [file(".idea"), file(".gradle"), file(".file"), file(".log"), file("out"), file("build")]
+    }
+}
+
+apply plugin: 'org.springframework.boot'
+
+allprojects {
+    apply plugin: "java"
+    apply plugin: "maven"
+    apply plugin: "idea"
+//    apply plugin: "project-report"
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+    [compileJava, compileTestJava]*.options*.encoding = "UTF-8"
+
+    // 테스트 output 경로 지정
+    sourceSets {
+        test {
+            output.resourcesDir = "${buildDir}/classes/test"
+        }
+    }
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+//        testCompile( 'junitjunit')
+    }
+
+    idea {
+        module {
+            outputDir = file("${buildDir}/classes/main")
+            testOutputDir = file("${buildDir}/classes/test")
+        }
+    }
+
+}
+
+subprojects { subproject ->
+
+    version = "${projectVersion}-${projectPolicy}"
+    description = "${projectDescription}"
+
+    dependencies {
+
+    }
+
+    // 기본 소스셋 디렉토리 생성
+    task initSourceFolders {
+
+        println "sourceSet Dir => " + subproject.sourceSets.main.java.srcDirs
+        println "sourceSet Dir => " + subproject.sourceSets.main.resources.srcDirs
+
+        subproject.sourceSets*.java.srcDirs*.each {
+            if (!it.exists()) {
+                it.mkdirs()
+            }
+        }
+
+        subproject.sourceSets*.resources.srcDirs*.each {
+            if (!it.exists()) {
+                it.mkdirs()
+            }
+        }
+    }
+
+
+}
+
+

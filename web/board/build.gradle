@@ -1,0 +1,33 @@
+apply plugin: "war"
+apply plugin: "org.springframework.boot"
+
+dependencies {
+
+    compile("org.springframework.boot:spring-boot-starter-web")
+//    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+
+//    // spring
+//    compile("org.springframework:spring-context-support")
+//
+    // jsp
+//    runtime("javax.servlet:jstl")
+//    providedRuntime("org.apache.tomcat.embed:tomcat-embed-jasper")
+    compile("javax.servlet:jstl")
+    compile("org.apache.tomcat.embed:tomcat-embed-jasper")
+//
+//    // stripes
+//    compile("net.sourceforge.stripes:stripes:1.6.0")
+//
+    // lombok
+    compile('org.projectlombok:lombok')
+
+    // AOP
+    compile('org.springframework.boot:spring-boot-starter-aop')
+
+    // JPA
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+
+    // MSSQL
+
+}

@@ -1,0 +1,14 @@
+spring:
+    mvc:
+      view:
+          prefix: /WEB-INF/jsp
+          suffix: .jsp
+    datasource:
+      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      url: jdbc:sqlserver://localhost;databaseName=springbootdb
+      username: knetdev
+      password: dev@SE@8385
+
+
+
+

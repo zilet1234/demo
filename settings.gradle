@@ -1,0 +1,27 @@
+rootProject.name = 'demo'
+
+// 공용 디렉토리 생성
+def commonDirs = [".log", ".file"]
+
+commonDirs.each {
+    def commonDir = new File(rootDir, it)
+
+    if (!commonDir.exists())
+        commonDir.mkdir()
+}
+
+// project 디렉토리 생성 및 하위모듈 불러오기
+['web', 'lib'].each {
+    def rootDir = new File(rootDir, it)
+
+    if( !rootDir.exists())
+        rootDir.mkdir()
+
+    rootDir.eachDir { dir ->
+        if (!dir.isDirectory() || dir.isHidden() || dir.name.startsWith("."))
+            return
+
+        include ":${dir.name}"
+        project(":${dir.name}").projectDir = new File(rootDir.absolutePath, dir.name)
+    }
+}
